@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: processing-job-single
+spec:
+  template:
+    spec:
+      containers:
+      - name: processor
+        image: bjarnold/python-app-kube
+        command: ["python", "/main.py"]
+        args: ["/data/input_file1.txt"]
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+      restartPolicy: Never
+      volumes:
+      - name: data-volume
+        hostPath:
+          path: /data
+          type: Directory

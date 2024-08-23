@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: processing-job-1
+spec:
+  template:
+    spec:
+      containers:
+      - name: processor
+        image: bjarnold/python-app-kube
+        command: ["python", "/main.py"]
+        args: ["/data/input_file1.txt"]
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+      restartPolicy: Never
+      volumes:
+      - name: data-volume
+        hostPath:
+          path: /data
+          type: Directory
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: processing-job-2
+spec:
+  template:
+    spec:
+      containers:
+      - name: processor
+        image: bjarnold/python-app-kube
+        command: ["python", "/main.py"]
+        args: ["/data/input_file2.txt"]
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+      restartPolicy: Never
+      volumes:
+      - name: data-volume
+        hostPath:
+          path: /data
+          type: Directory
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: processing-job-3
+spec:
+  template:
+    spec:
+      containers:
+      - name: processor
+        image: bjarnold/python-app-kube
+        command: ["python", "/main.py"]
+        args: ["/data/input_file3.txt"]
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+      restartPolicy: Never
+      volumes:
+      - name: data-volume
+        hostPath:
+          path: /data
+          type: Directory
